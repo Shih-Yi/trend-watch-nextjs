@@ -19,7 +19,9 @@ export default function Feed() {
   const [allPosts, setAllPosts] = useState([]);
 
   const fetchPosts = async () => {
-    const response = await fetch("/api/news");
+    const response = await fetch("/api/news", {
+    cache: 'no-store',
+  });
     console.log('response-------------')
     console.log(response)
     const data = await response.json();
