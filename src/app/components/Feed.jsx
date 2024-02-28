@@ -17,7 +17,6 @@ const NewsCardList = ({ news }) => {
   );
 };
 
-export const revalidate = 0;
 export default function Feed() {
   const [allPosts, setAllPosts] = useState([]);
 

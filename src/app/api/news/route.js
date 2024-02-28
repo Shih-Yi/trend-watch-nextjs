@@ -8,6 +8,9 @@ const config = {
   MongoDbUrl: process.env.MONGODB_URL,
 };
 
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 export const GET = async (req, res) => {
   const uri = `mongodb+srv://${config.MongoDbUserName}:${config.MongoDbPassword}@${config.MongoDbUrl}/?retryWrites=true&w=majority`;
   const client = new MongoClient(uri);
