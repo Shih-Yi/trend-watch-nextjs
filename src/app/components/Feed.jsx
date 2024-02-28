@@ -1,7 +1,9 @@
 'use client';
 
+import axios from "axios";
 import { useState, useEffect } from "react";
 import NewsCard from "./NewsCard";
+
 const NewsCardList = ({ news }) => {
   return (
     <>
@@ -19,12 +21,15 @@ export default function Feed() {
   const [allPosts, setAllPosts] = useState([]);
 
   const fetchPosts = async () => {
-    const response = await fetch("/api/news", {
-    cache: 'no-store',
-  });
+    const response = await axios.get("/api/news", {
+      headers: {
+        'Cache-Control': 'no-store'
+      }
+    });
     console.log('response-------------')
     console.log(response)
-    const data = await response.json();
+    const data = await response.data;
+    console.log('data-------------')
     console.log(data)
     setAllPosts(data);
   };
