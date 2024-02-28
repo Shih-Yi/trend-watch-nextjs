@@ -17,19 +17,20 @@ const NewsCardList = ({ news }) => {
   );
 };
 
+export const revalidate = 0;
 export default function Feed() {
   const [allPosts, setAllPosts] = useState([]);
 
   const fetchPosts = async () => {
-    const response = await axios.get("/api/news", {
+    const response = await fetch("/api/news", {
+      cache: 'no-store',
       headers: {
-        'Cache-Control': 'no-store'
-      }
+        'Content-Type': 'application/json',
+      },
     });
     console.log('response-------------')
     console.log(response)
-    const data = await response.data;
-    console.log('data-------------')
+    const data = await response.json();
     console.log(data)
     setAllPosts(data);
   };
