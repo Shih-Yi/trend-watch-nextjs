@@ -1,7 +1,6 @@
 'use client';
 
 import Feed from "./components/Feed";
-import {Card, CardHeader, CardBody, CardFooter, Image, Button} from "@nextui-org/react";
 
 export default function Home() {
   return (

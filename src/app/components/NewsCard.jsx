@@ -1,8 +1,36 @@
 'use client';
 
+import React, { useState } from 'react';
 import {Card, CardHeader, CardFooter, Image, Button} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
 
 export default function NewsCard({post}) {
+  const { result } = post
+  const [modalContent, setModalContent] = useState(result);
+  const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
+
+  const handleClick = async (id) => {
+    if (modalContent) {
+      onOpen();
+    } else {
+      const response = await fetch(`/api/news/${id}`, {
+        method: 'PATCH',
+        cache: 'no-store',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+      });
+      const summary = await response.json();
+
+      if (response.ok) {
+        setModalContent(summary.result)
+        onOpen();
+      } else {
+        alert('Something went wrong');
+      }
+    }
+  };
+
   return (
     <Card className="col-span-12 sm:col-span-4 h-[300px]">
       <CardHeader className="absolute z-10 top-1 flex-col !items-start">
@@ -27,7 +55,29 @@ export default function NewsCard({post}) {
             <p className="text-tiny text-white/60">Get a good night&apos;s sleep.</p>
           </div>
         </div>
-        <Button radius="full" size="sm">Read more</Button>
+        <Button onClick={()=> handleClick(`${post._id}`)} radius="full" size="sm">Read more</Button>
+        <Modal 
+          size='lg'
+          isOpen={isOpen} 
+          onClose={onClose}
+          onOpenChange={onOpenChange}
+        >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Summary</ModalHeader>
+              <ModalBody>
+                {modalContent}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       </CardFooter>
     </Card>
   )

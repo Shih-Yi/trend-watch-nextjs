@@ -1,6 +1,5 @@
 'use client';
 
-import axios from "axios";
 import { useState, useEffect } from "react";
 import NewsCard from "./NewsCard";
 
@@ -27,10 +26,7 @@ export default function Feed() {
         'Content-Type': 'application/json',
       },
     });
-    console.log('response-------------')
-    console.log(response)
     const data = await response.json();
-    console.log(data)
     setAllPosts(data);
   };
 
