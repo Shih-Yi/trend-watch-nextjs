@@ -20,7 +20,11 @@ export default function NewsCard({post}) {
             'Content-Type': 'application/json',
         },
       });
+      console.log("----------end")
+      console.log(response)
+      
       const summary = await response.json();
+      console.log(summary)
 
       if (response.ok) {
         setModalContent(summary.result)

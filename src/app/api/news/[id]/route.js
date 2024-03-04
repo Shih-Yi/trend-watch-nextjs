@@ -26,6 +26,7 @@ export const PATCH = async (req, { params }) => {
     }
       
     if (!post.result) {
+      console.log('update---')
       const headerConfig = {
         headers: {
           'X-API-KEY': config.xApiKey
@@ -37,9 +38,11 @@ export const PATCH = async (req, { params }) => {
       } catch (error) {
         console.error('Error:', error.response ? error.response.data : error.message);
       }
+      console.log('body:1111----------', response);
       const summary = response.data.body
+      console.log('summary:', summary);
       const summaryResult = JSON.parse(summary)
-      await collection.updateOne({ _id: new ObjectId(id) }, { $set: summaryResult });
+      const result = await collection.updateOne({ _id: new ObjectId(id) }, { $set: summaryResult });
       return new Response(JSON.stringify(summaryResult), { status: 200 })
     }
     return new Response(JSON.stringify(post), { status: 200 })
