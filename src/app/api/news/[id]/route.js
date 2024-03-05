@@ -39,7 +39,7 @@ export const PATCH = async (req, { params }) => {
       } catch (error) {
         console.error('Error:', error.response ? error.response.data : error.message);
       }
-      console.log('Post PATCH: post finished', response);
+      console.log('Post PATCH: post finished, Response:', response);
       const summary = response.data.body
       console.log('Post PATCH: post summary');
       const summaryResult = JSON.parse(summary)
